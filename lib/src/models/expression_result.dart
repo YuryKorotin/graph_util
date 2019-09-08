@@ -1,6 +1,3 @@
-
-import 'dart:typed_data';
-
 class ExpressionResult {
   final List<double> coordinates;
 

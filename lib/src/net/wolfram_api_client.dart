@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:graph_util/src/net/models/wolfram_result.dart';
 
-class WeatherAPIClient {
+class WolframAPIClient {
   final _appId = '67JRL8-6HPY64EK22';
   final _baseUrl = 'https://api.wolframalpha.com/v2';
 

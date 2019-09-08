@@ -1,5 +1,5 @@
-import 'package:graph_util/src/states/calculator_state.dart';
+import 'package:graph_util/src/states/graph_state.dart';
 
-class InitialState extends CalculatorState {
+class InitialState extends GraphState {
   InitialState(int mode) : super(mode);
 }
