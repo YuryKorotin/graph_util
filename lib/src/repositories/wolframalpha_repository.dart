@@ -6,7 +6,6 @@ class WolframalphaRepository {
   final _apiClient = WolframAPIClient ();
   Stream<WolframResult> getExpressionResult(String query) {
 
-    return _apiClient.requestResultForQuery("")
-        .asStream();
+    return _apiClient.requestResultForQuery(query).asStream();
   }
 }

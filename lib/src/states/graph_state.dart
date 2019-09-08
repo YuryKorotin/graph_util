@@ -5,7 +5,12 @@ class GraphState {
   static const String CUSTOM_MODE_LABEL = "CUSTOM";
   static const String WOLFRAM_MODE_LABEL = "WOLFRAM";
 
+  static const String START_EXPRESSION = "x * x + 4 * x + 3";
+
   int _mode = CUSTOM_MODE;
+  String _expression = START_EXPRESSION;
+  int _startValue = 2;
+  int _endValue = 4;
 
   GraphState(this._mode);
 
@@ -15,6 +20,30 @@ class GraphState {
 
   setMode(int mode) {
     _mode = mode;
+  }
+
+  setStartValue(int startValue) {
+    _startValue = startValue;
+  }
+
+  int getStartValue() {
+    return _startValue;
+  }
+
+  setEndValue(int endValue) {
+    _endValue = endValue;
+  }
+
+  int getEndValue() {
+    return _endValue;
+  }
+
+  setExpression(String expression) {
+    _expression = expression;
+  }
+
+  String getExpression() {
+    return _expression;
   }
 
   static String getLabelFromIntMode(int mode) {

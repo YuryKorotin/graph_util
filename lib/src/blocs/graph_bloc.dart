@@ -4,6 +4,7 @@ import 'package:graph_util/src/models/expression_result.dart';
 import 'package:graph_util/src/net/models/wolfram_result.dart';
 import 'package:graph_util/src/processors/expression_evaluator.dart';
 import 'package:graph_util/src/repositories/wolframalpha_repository.dart';
+import 'package:graph_util/src/screens/graph_widget.dart';
 import 'package:graph_util/src/states/drawing_state.dart';
 import 'package:graph_util/src/states/error_state.dart';
 import 'package:graph_util/src/states/graph_state.dart';
@@ -29,18 +30,20 @@ class GraphBloc {
     return _currentState;
   }
 
-  processExpression(String query) {
+  processExpression() {
     _currentState = ProgressState(_currentState.getMode());
     _graphController.add(_currentState);
 
     if (_currentState.getMode() == GraphState.WOLFRAM_MODE) {
-      _requestWolfram(query);
+      _requestWolfram(_currentState.getExpression());
     } else if (_currentState.getMode() == GraphState.CUSTOM_MODE) {
-      _requestEvaluation(query);
+      _requestEvaluation(_currentState.getExpression());
     }
   }
 
   _requestWolfram(String query) {
+    var formattedQuery = "$query from x = ${_currentState.getStartValue()} to ${_currentState.getEndValue()}";
+
     _wolframalphaRepository
         .getExpressionResult(query)
         .listen((dynamic result) {
@@ -68,8 +71,12 @@ class GraphBloc {
     _graphController.add(_currentState);
   }
 
-  changeMode(mode) {
-    _currentState.setMode(mode);
+  updateState(Map changes) {
+    _currentState.setMode(changes[GraphWidget.MODE_KEY]);
+    _currentState.setStartValue(changes[GraphWidget.START_VALUE_KEY]);
+    _currentState.setEndValue(changes[GraphWidget.END_VALUE_KEY]);
+    _currentState.setExpression(changes[GraphWidget.EXPRESSION_KEY]);
+
     _graphController.add(_currentState);
   }
 }
