@@ -70,5 +70,6 @@ class GraphBloc {
 
   changeMode(mode) {
     _currentState.setMode(mode);
+    _graphController.add(_currentState);
   }
 }

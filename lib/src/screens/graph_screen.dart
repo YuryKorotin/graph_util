@@ -41,8 +41,9 @@ class _GraphScreenState extends State<GraphScreen> {
       );
     }
 
-    return GraphWidget((query) => {GraphBlocProvider.of(context).bloc.processExpression(query)},
-        (mode) => {GraphBlocProvider.of(context).bloc.changeMode(mode)},
+    return GraphWidget(
+            (query) => {GraphBlocProvider.of(context).bloc.processExpression(query)},
+            (mode) => {GraphBlocProvider.of(context).bloc.changeMode(mode)},
         GraphState.getLabelFromIntMode(GraphBlocProvider.of(context).bloc.getCurrentState().getMode())
     );
   }

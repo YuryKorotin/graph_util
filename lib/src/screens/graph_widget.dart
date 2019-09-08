@@ -15,7 +15,7 @@ class GraphWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 60.0,
+      height: 260.0,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -27,25 +27,36 @@ class GraphWidget extends StatelessWidget {
             padding: EdgeInsets.only(top: 8.0, left: 8.0),
             child: TextField(),
           ),
-          Padding(
-            padding: EdgeInsets.only(top: 8.0, left: 8.0),
-            child:  RaisedButton(
-              onPressed: _evaluationCallback(""),
-              child: const Text(
-                  'Evaluate',
-                  style: TextStyle(fontSize: 20)
+          Row(
+            children: <Widget>[
+              Padding(
+                  padding: EdgeInsets.only(top: 8.0, left: 8.0),
+                  child:  RaisedButton(
+                    onPressed: _startEvaluation,
+                    child: const Text(
+                        'Evaluate',
+                        style: TextStyle(fontSize: 20)
+                    ),
+                  )
               ),
-            )
-          ),
-          new DropdownButton(
-            value: _currentMode,
-            items: getDropDownMenuItems(),
-            onChanged: changedDropDownItem,
+              Padding(
+                  padding: EdgeInsets.only(top: 8.0, left: 28.0),
+                  child: DropdownButton(
+                    value: _currentMode,
+                    items: getDropDownMenuItems(),
+                    onChanged: changedDropDownItem,
+              ))
+            ]
           )
         ],
       ),
     );
   }
+
+  _startEvaluation() {
+    _evaluationCallback("x * x");
+  }
+
   List<DropdownMenuItem<String>> getDropDownMenuItems() {
     List<DropdownMenuItem<String>> items = new List();
     items.add(new DropdownMenuItem(
