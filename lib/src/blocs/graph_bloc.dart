@@ -4,7 +4,7 @@ import 'package:graph_util/src/models/expression_result.dart';
 import 'package:graph_util/src/net/models/wolfram_result.dart';
 import 'package:graph_util/src/processors/expression_evaluator.dart';
 import 'package:graph_util/src/repositories/wolframalpha_repository.dart';
-import 'package:graph_util/src/screens/graph_widget.dart';
+import 'package:graph_util/src/widgets/graph_widget.dart';
 import 'package:graph_util/src/states/drawing_state.dart';
 import 'package:graph_util/src/states/error_state.dart';
 import 'package:graph_util/src/states/graph_state.dart';

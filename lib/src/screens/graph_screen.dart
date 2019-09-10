@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:graph_util/src/blocs/graph_bloc.dart';
 import 'package:graph_util/src/blocs/graph_bloc_provider.dart';
-import 'package:graph_util/src/screens/graph_widget.dart';
+import 'package:graph_util/src/widgets/graph_widget.dart';
 import 'package:graph_util/src/states/graph_state.dart';
 import 'package:graph_util/src/states/progress_state.dart';
 import 'package:graph_util/src/states/showing_image_state.dart';
