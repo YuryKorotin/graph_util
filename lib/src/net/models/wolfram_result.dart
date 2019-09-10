@@ -10,7 +10,7 @@ class WolframResult {
 
     this._imageSource = "";
 
-    var subPods = pods[2]['subpods'];
+    var subPods = pods[1]['subpods'];
     this._imageSource = subPods[0]['img']['src'];
   }
 }

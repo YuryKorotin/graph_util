@@ -30,8 +30,17 @@ class GraphBloc {
     return _currentState;
   }
 
+  _cloneStateFields(GraphState prevState) {
+    _currentState.setEndValue(prevState.getEndValue());
+    _currentState.setStartValue(prevState.getStartValue());
+    _currentState.setExpression(prevState.getExpression());
+  }
+
   processExpression() {
+    var prevState = _currentState;
     _currentState = ProgressState(_currentState.getMode());
+    _cloneStateFields(prevState);
+
     _graphController.add(_currentState);
 
     if (_currentState.getMode() == GraphState.WOLFRAM_MODE) {
@@ -42,15 +51,19 @@ class GraphBloc {
   }
 
   _requestWolfram(String query) {
-    var formattedQuery = "$query from x = ${_currentState.getStartValue()} to ${_currentState.getEndValue()}";
+    var formattedQuery = "$query x from ${_currentState.getStartValue()} to ${_currentState.getEndValue()}";
 
     _wolframalphaRepository
-        .getExpressionResult(query)
+        .getExpressionResult(formattedQuery)
         .listen((dynamic result) {
       if (result is WolframResult) {
-        _currentState = ShowingImageState(_currentState.getMode(), result);
+        var prevState = _currentState;
+        _currentState = ShowingImageState(prevState.getMode(), result);
+        _cloneStateFields(prevState);
       } else {
+        var prevState = _currentState;
         _currentState = ErrorState(_currentState.getMode(), "Error while wolfram request");
+        _cloneStateFields(prevState);
       }
       _graphController.add(_currentState);
     });

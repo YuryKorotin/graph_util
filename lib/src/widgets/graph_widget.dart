@@ -101,17 +101,16 @@ class GraphWidget extends StatelessWidget {
 
   _onEndValueChanged(String value) {
     changes[END_VALUE_KEY] = int.parse(value);
-    _changeStateCallback(changes);
   }
 
   _onExpressionChanged(String value) {
     changes[EXPRESSION_KEY] = value;
-    _changeStateCallback(changes);
   }
 
   _startEvaluation() {
-    _evaluationCallback(_state.getExpression());
+    print(changes);
     _changeStateCallback(changes);
+    _evaluationCallback();
   }
 
   List<DropdownMenuItem<String>> getDropDownMenuItems() {

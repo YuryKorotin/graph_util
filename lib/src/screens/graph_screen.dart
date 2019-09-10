@@ -18,17 +18,20 @@ class GraphScreen extends StatefulWidget {
 
 class _GraphScreenState extends State<GraphScreen> {
 
+  Widget topWidget;
+  GraphBloc graphBloc;
+
   @override
   Widget build(BuildContext context) {
-    GraphBloc bloc = GraphBlocProvider.of(context).bloc;
+    graphBloc = GraphBlocProvider.of(context).bloc;
 
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
       ),
       body: StreamBuilder<GraphState>(
-          initialData: bloc.getCurrentState(),
-          stream: bloc.graphStream,
+          initialData: graphBloc.getCurrentState(),
+          stream: graphBloc.graphStream,
           builder: _buildBody
       ),
     );
@@ -51,10 +54,10 @@ class _GraphScreenState extends State<GraphScreen> {
       );
     }
 
-    var topWidget =  GraphWidget(
-            (query) => {GraphBlocProvider.of(context).bloc.processExpression()},
+    topWidget =  GraphWidget(
+            () => {graphBloc.processExpression()},
             (changes) => {_updateState(context, changes)},
-            GraphBlocProvider.of(context).bloc.getCurrentState()
+        graphBloc.getCurrentState()
     );
 
     return Container(
@@ -69,8 +72,6 @@ class _GraphScreenState extends State<GraphScreen> {
   }
 
   _updateState(BuildContext context, Map changes) {
-    GraphBloc bloc = GraphBlocProvider.of(context).bloc;
-
-    bloc.updateState(changes);
+    graphBloc.updateState(changes);
   }
 }
