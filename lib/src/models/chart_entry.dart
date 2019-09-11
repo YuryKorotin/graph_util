@@ -10,4 +10,8 @@ class ChartEntry {
       "ordinate": _ordinate
     };
   }
+
+  double get ordinate => _ordinate;
+
+  int get abscissa => _abscissa;
 }

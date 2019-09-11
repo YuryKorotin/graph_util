@@ -1,5 +1,9 @@
-class ExpressionResult {
-  final List<double> coordinates;
+import 'package:graph_util/src/models/chart_entry.dart';
 
-  ExpressionResult(this.coordinates);
+class ExpressionResult {
+  final List<ChartEntry> _coordinates;
+
+  List<ChartEntry> get coordinates => _coordinates;
+
+  ExpressionResult(this._coordinates);
 }

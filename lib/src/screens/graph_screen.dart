@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:graph_util/src/blocs/graph_bloc.dart';
 import 'package:graph_util/src/blocs/graph_bloc_provider.dart';
+import 'package:graph_util/src/states/drawing_state.dart';
+import 'package:graph_util/src/widgets/expression_chart.dart';
 import 'package:graph_util/src/widgets/graph_widget.dart';
 import 'package:graph_util/src/states/graph_state.dart';
 import 'package:graph_util/src/states/progress_state.dart';
@@ -50,6 +52,14 @@ class _GraphScreenState extends State<GraphScreen> {
       centerWidget = Center(
         child: Image.network(
             (snapshot.data as ShowingImageState).getData().getImageSource()
+        ),
+      );
+    }
+
+    if (snapshot.data is DrawingState) {
+      centerWidget = Center(
+        child: ExpressionChart(
+            (snapshot.data as DrawingState).data
         ),
       );
     }

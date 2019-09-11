@@ -71,15 +71,23 @@ class GraphBloc {
 
   _requestEvaluation(query) {
     _evaluator
-        .processQuery(query)
+        .processQuery(query, _currentState.getStartValue(), _currentState.getEndValue())
         .then((result) => _processEvaluationResult(result));
   }
 
   _processEvaluationResult(ExpressionResult result) {
     if (result.coordinates.isNotEmpty) {
-      _currentState = DrawingState(_currentState.getMode(), result.coordinates);
+      var prevState = _currentState;
+      _currentState =
+          DrawingState(_currentState.getMode(), result.coordinates);
+      _cloneStateFields(prevState);
     } else {
-      _currentState = ErrorState(_currentState.getMode(), "Error was caught during evaluation of expression");
+      var prevState = _currentState;
+      _currentState =
+          ErrorState(
+              _currentState.getMode(),
+              "Error was caught during evaluation of expression");
+      _cloneStateFields(prevState);
     }
     _graphController.add(_currentState);
   }
