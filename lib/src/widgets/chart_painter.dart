@@ -11,7 +11,7 @@ import 'package:tuple/tuple.dart';
 class ChartPainter extends CustomPainter {
   final List<ChartEntry> _entries;
 
-  static const int NUMBER_OF_HORIZONTAL_LINES = 10;
+  static const int NUMBER_OF_HORIZONTAL_LINES = 3;
   int numberOfEntries = 0;
 
   ChartPainter(this._entries){
@@ -34,7 +34,7 @@ class ChartPainter extends CustomPainter {
       Tuple2<int, int> borderLineValues = _getMinAndMaxValues();
       _drawHorizontalLinesAndLabels(
           canvas, size, borderLineValues.item1, borderLineValues.item2);
-      //_drawBottomLabels(canvas, size);
+      _drawBottomLabels(canvas, size);
 
       _drawLines(canvas, borderLineValues.item1, borderLineValues.item2);
     }
@@ -105,29 +105,29 @@ class ChartPainter extends CustomPainter {
       ..pushStyle(new prefix0.TextStyle(color: Colors.black))
       ..addText((maxLineValue - line * lineStep).toString());
     final Paragraph paragraph = builder.build()
-      ..layout(new ParagraphConstraints(width: leftOffsetStart - 4));
+      ..layout(new ParagraphConstraints(width: leftOffsetStart));
     return paragraph;
   }
 
   void _drawBottomLabels(Canvas canvas, Size size) {
-    for (int daysFromStart = numberOfEntries;
-    daysFromStart >= 0;
-    daysFromStart -= 7) {
-      double offsetXbyDay = drawingWidth / (numberOfEntries);
-      double offsetX = leftOffsetStart + offsetXbyDay * daysFromStart;
-      Paragraph paragraph = _buildParagraphForBottomLabel(daysFromStart);
+    for (int entriesFromStart = numberOfEntries - 1;
+    entriesFromStart >= 0;
+    entriesFromStart -= 1) {
+      double offsetXbyEntry = drawingWidth / (numberOfEntries);
+      double offsetX = leftOffsetStart + offsetXbyEntry * entriesFromStart;
+      Paragraph paragraph = _buildParagraphForBottomLabel(entriesFromStart);
       canvas.drawParagraph(
         paragraph,
-        new Offset(offsetX - 50.0, 10.0 + drawingHeight),
+        new Offset(offsetX, 10.0 + drawingHeight),
       );
     }
   }
 
-  Paragraph _buildParagraphForBottomLabel(int daysFromStart) {
+  Paragraph _buildParagraphForBottomLabel(int entriesFromStart) {
     ParagraphBuilder builder = ParagraphBuilder(
         ParagraphStyle(fontSize: 10.0, textAlign: TextAlign.right))
       ..pushStyle(new prefix0.TextStyle(color: Colors.black))
-      ..addText(_entries[daysFromStart].ordinate.toString());
+      ..addText(_entries[entriesFromStart].abscissa.toString());
     final Paragraph paragraph = builder.build()
       ..layout(ParagraphConstraints(width: 50.0));
     return paragraph;
@@ -145,7 +145,8 @@ class ChartPainter extends CustomPainter {
   void _drawHorizontalLinesAndLabels(Canvas canvas, Size size, int minLineValue,
       int maxLineValue) {
     final paint = new Paint()
-      ..color = Colors.grey[300];
+      ..color = Colors.black;
+
     int lineStep = _calculateHorizontalLineStep(maxLineValue, minLineValue);
     double offsetStep = _calculateHorizontalOffsetStep;
     for (int line = 0; line < NUMBER_OF_HORIZONTAL_LINES; line++) {
@@ -157,9 +158,9 @@ class ChartPainter extends CustomPainter {
 
   Offset _getEntryOffset(ChartEntry entry,
       int minLineValue, int maxLineValue) {
-    int daysFromBeginning = entry.abscissa;
+    int entriesFromBeginning = entry.abscissa;
 
-    double relativeXposition = daysFromBeginning / numberOfEntries;
+    double relativeXposition = entriesFromBeginning / numberOfEntries;
     double xOffset = leftOffsetStart + relativeXposition * drawingWidth;
     double relativeYposition =
         (entry.ordinate - minLineValue) / (maxLineValue - minLineValue);

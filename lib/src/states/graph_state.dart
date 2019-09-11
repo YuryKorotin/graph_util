@@ -10,7 +10,7 @@ class GraphState {
   int _mode = CUSTOM_MODE;
   String _expression = START_EXPRESSION;
   int _startValue = 2;
-  int _endValue = 4;
+  int _endValue = 10;
 
   GraphState(this._mode);
 
