@@ -1,5 +1,5 @@
 class ExpressionNode {
-  String _value;
+  var _value;
 
   ExpressionNode _left;
   ExpressionNode _right;
@@ -29,7 +29,7 @@ class ExpressionNode {
   }
 
 
-  set value(String value) {
+  set value(value) {
     _value = value;
   }
 }
